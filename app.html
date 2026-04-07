@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Immigration Case Simulator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e8f0f7;
+      color: #222;
+    }
+    nav {
+      background-color: #1a3a5c;
+      padding: 10px 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      background-color: #1a3a5c;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 16px;
+      opacity: 0.85;
+    }
+    .container {
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .card {
+      background-color: white;
+      border-radius: 6px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      color: #1a3a5c;
+      margin-bottom: 5px;
+    }
+    .card .client {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      background-color: #f0f4f8;
+      border: 2px solid #1a3a5c;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .options button:hover {
+      background-color: #d0e0f0;
+    }
+    .options button.correct {
+      background-color: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+    }
+    .options button.wrong {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+      color: #721c24;
+    }
+    .feedback {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 4px;
+      line-height: 1.7;
+    }
+    .feedback.correct {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .feedback.wrong {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .next-btn {
+      display: none;
+      margin-top: 15px;
+      padding: 10px 25px;
+      background-color: #1a3a5c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .next-btn:hover {
+      background-color: #2a5a8c;
+    }
+    .score-card {
+      display: none;
+      text-align: center;
+      background-color: white;
+      border-radius: 6px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .score-card h2 {
+      color: #1a3a5c;
+      font-size: 28px;
+    }
+    .score-card p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .restart-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #1a3a5c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .restart-btn:hover {
+      background-color: #2a5a8c;
+    }
+    footer {
+      background-color: #1a3a5c;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #f0c040;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <a href="scratch.html">Immigration Law</a>
+  </nav>
+
+  <div class="hero">
+    <h1>Immigration Case Simulator</h1>
+    <p>Read each client's situation and choose the best legal pathway to help them.</p>
+  </div>
+
+  <div class="container">
+
+    <div class="card" id="scenario1">
+      <h2>Case 1 of 3</h2>
+      <p class="client">
+        Your client is Maria, a woman from Guatemala. She fled her home country
+        after being threatened by a gang for refusing to cooperate with them.
+        She fears for her life if she returns. She has just arrived at the
+        US border and is asking for your help.
+      </p>
+      <div class="options">
+        <button onclick="answer(this, false, 'feedback1')">Apply for a work visa (H-1B)</button>
+        <button onclick="answer(this, true, 'feedback1')">File an asylum application (Form I-589)</button>
+        <button onclick="answer(this, false, 'feedback1')">Apply for a green card through family (Form I-130)</button>
+        <button onclick="answer(this, false, 'feedback1')">Apply for naturalization (Form N-400)</button>
+      </div>
+      <div class="feedback" id="feedback1"></div>
+      <button class="next-btn" id="next1" onclick="showScenario('scenario1', 'scenario2')">Next Case</button>
+    </div>
+
+    <div class="card" id="scenario2" style="display:none;">
+      <h2>Case 2 of 3</h2>
+      <p class="client">
+        Your client is Carlos, a Mexican citizen who has been living in the
+        United States as a lawful permanent resident for 6 years. He has
+        maintained good moral character, paid his taxes, and passed his
+        English test. He now wants to become a full US citizen.
+      </p>
+      <div class="options">
+        <button onclick="answer(this, false, 'feedback2')">File an asylum application (Form I-589)</button>
+        <button onclick="answer(this, false, 'feedback2')">Apply for a student visa (F-1)</button>
+        <button onclick="answer(this, true, 'feedback2')">Apply for naturalization (Form N-400)</button>
+        <button onclick="answer(this, false, 'feedback2')">Apply for a work visa (H-1B)</button>
+      </div>
+      <div class="feedback" id="feedback2"></div>
+      <button class="next-btn" id="next2" onclick="showScenario('scenario2', 'scenario3')">Next Case</button>
+    </div>
+
+    <div class="card" id="scenario3" style="display:none;">
+      <h2>Case 3 of 3</h2>
+      <p class="client">
+        Your client is Wei, a Chinese national whose sister is a US citizen.
+        Wei has never been to the United States but wants to immigrate legally
+        to be closer to his family. He has no criminal record and is in good health.
+      </p>
+      <div class="options">
+        <button onclick="answer(this, true, 'feedback3')">File a family petition (Form I-130)</button>
+        <button onclick="answer(this, false, 'feedback3')">Apply for naturalization (Form N-400)</button>
+        <button onclick="answer(this, false, 'feedback3')">File an asylum application (Form I-589)</button>
+        <button onclick="answer(this, false, 'feedback3')">Apply for a tourist visa (B-2)</button>
+      </div>
+      <div class="feedback" id="feedback3"></div>
+      <button class="next-btn" id="next3" onclick="showResults()">See My Results</button>
+    </div>
+
+    <div class="score-card" id="results">
+      <h2>Simulation Complete!</h2>
+      <p id="score-text"></p>
+      <p id="score-message"></p>
+      <button class="restart-btn" onclick="restart()">Try Again</button>
+      <br><br>
+      <a href="scratch.html" style="color: #1a3a5c;">Back to Immigration Law Page</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Hayden Mayer | <a href="scratch.html">Back to Immigration Law</a></p>
+  </footer>
+
+  <script>
+    var score = 0;
+    var answered = [false, false, false];
+
+    var explanations = {
+      feedback1: {
+        correct: "Correct! Maria is fleeing persecution, which means she qualifies to apply for asylum using Form I-589. Asylum protects people who have suffered or fear persecution based on race, religion, nationality, political opinion, or membership in a particular social group.",
+        wrong: "Not quite. Since Maria is fleeing persecution and fears for her life, the correct pathway is asylum (Form I-589). Work visas, family petitions, and naturalization do not apply to her situation."
+      },
+      feedback2: {
+        correct: "Correct! Carlos has been a lawful permanent resident for over 5 years and meets all the requirements. He should apply for naturalization using Form N-400 to become a US citizen.",
+        wrong: "Not quite. Since Carlos is already a lawful permanent resident for 6 years with good moral character, the correct pathway is naturalization (Form N-400). He does not need a visa or asylum."
+      },
+      feedback3: {
+        correct: "Correct! Since Wei's sister is a US citizen, she can file a family-based petition (Form I-130) on his behalf. This is the family immigration pathway for immediate relatives of US citizens.",
+        wrong: "Not quite. Since Wei has a US citizen sister, the correct pathway is a family petition (Form I-130). Naturalization requires already being a resident, asylum requires fear of persecution, and a tourist visa does not lead to permanent immigration."
+      }
+    };
+
+    function answer(button, isCorrect, feedbackId) {
+      var num = feedbackId.replace('feedback', '');
+      if (answered[num - 1]) return;
+      answered[num - 1] = true;
+
+      var allButtons = button.parentElement.querySelectorAll('button');
+      allButtons.forEach(function(btn) {
+        btn.disabled = true;
+      });
+
+      var feedback = document.getElementById(feedbackId);
+      feedback.style.display = 'block';
+
+      if (isCorrect) {
+        button.classList.add('correct');
+        feedback.classList.add('correct');
+        feedback.textContent = explanations[feedbackId].correct;
+        score++;
+      } else {
+        button.classList.add('wrong');
+        feedback.classList.add('wrong');
+        feedback.textContent = explanations[feedbackId].wrong;
+      }
+
+      document.getElementById('next' + num).style.display = 'inline-block';
+    }
+
+    function showScenario(hideId, showId) {
+      document.getElementById(hideId).style.display = 'none';
+      document.getElementById(showId).style.display = 'block';
+    }
+
+    function showResults() {
+      document.getElementById('scenario3').style.display = 'none';
+      var results = document.getElementById('results');
+      results.style.display = 'block';
+      document.getElementById('score-text').textContent = 'You scored ' + score + ' out of 3.';
+      if (score === 3) {
+        document.getElementById('score-message').textContent = 'Excellent! You have a strong understanding of immigration law pathways!';
+      } else if (score === 2) {
+        document.getElementById('score-message').textContent = 'Good job! Review the cases you missed to strengthen your knowledge.';
+      } else {
+        document.getElementById('score-message').textContent = 'Keep studying! Immigration law is complex but you will get there.';
+      }
+    }
+
+    function restart() {
+      score = 0;
+      answered = [false, false, false];
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('scenario1').style.display = 'block';
+      document.getElementById('scenario2').style.display = 'none';
+      document.getElementById('scenario3').style.display = 'none';
+
+      var feedbacks = ['feedback1', 'feedback2', 'feedback3'];
+      feedbacks.forEach(function(id) {
+        var el = document.getElementById(id);
+        el.style.display = 'none';
+        el.className = 'feedback';
+        el.textContent = '';
+      });
+
+      var nextBtns = ['next1', 'next2', 'next3'];
+      nextBtns.forEach(function(id) {
+        document.getElementById(id).style.display = 'none';
+      });
+
+      var buttons = document.querySelectorAll('.options button');
+      buttons.forEach(function(btn) {
+        btn.disabled = false;
+        btn.className = '';
+      });
+    }
+  </script>
+
+</body>
+</html>
