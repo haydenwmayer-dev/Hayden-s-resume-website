@@ -37,6 +37,7 @@ body{
   max-width: 800px;
   margin: 30px auto;
   padding: 0 20px;
+  position: relative;
 }
 
 .section h2 {
